@@ -1,26 +1,68 @@
-trainSubjects<-read.table("train/subject_train.txt", header=FALSE, sep="", col.names=c("subject"))
-
 features<-read.table("features.txt", sep="")
+featurenames<-features$V2
 
 activity_lab<-read.table("activity_labels.txt", col.names=c("activity", "desc"))
 
-trainX<-read.table("train/X_train.txt")
-trainactlabels<-read.table("train/y_train.txt", col.names=c("activity"))
-nmdtestlabels<-inner_join(activity_lab,testactlabels) ##activities name & num for test data
+##training data processing
+trainSubjects<-read.table("train/subject_train.txt", header=FALSE, sep="", col.names=c("subject"))
 
+trainX<-read.table("train/X_train.txt", col.names=featurenames) ##label training data with feature names
+trainactlabels<-read.table("train/y_train.txt", col.names=c("activity"))
+nmdtrainlabels<-inner_join(activity_lab,trainactlabels) ##activities name & num for training data
+actnmsubtrain<-cbind(nmdtrainlabels,trainSubjects)##add subject ID column to training 
+
+
+trainInertiaXTA<-read.table("train/Inertial Signals/total_acc_x_train.txt", col.names=(sprintf("Xta%d",seq(1:128))))
+trainInertiaYTA<-read.table("train/Inertial Signals/total_acc_y_train.txt",col.names=(sprintf("Yta%d",seq(1:128))))
+trainInertiaZTA<-read.table("train/Inertial Signals/total_acc_z_train.txt",col.names=(sprintf("Zta%d",seq(1:128))))
+
+trainInertiaXBA<-read.table("train/Inertial Signals/body_acc_x_train.txt",col.names=(sprintf("Xba%d",seq(1:128))))
+trainInertiaYBA<-read.table("train/Inertial Signals/body_acc_y_train.txt",col.names=(sprintf("Yba%d",seq(1:128))))
+trainInertiaZBA<-read.table("train/Inertial Signals/body_acc_z_train.txt",col.names=(sprintf("Zba%d",seq(1:128))))
+
+trainInertiaXBG<-read.table("train/Inertial Signals/body_gyro_x_train.txt",col.names=(sprintf("Xbg%d",seq(1:128))))
+trainInertiaYBG<-read.table("train/Inertial Signals/body_gyro_y_train.txt",col.names=(sprintf("Ybg%d",seq(1:128))))
+trainInertiaZBG<-read.table("train/Inertial Signals/body_gyro_z_train.txt",col.names=(sprintf("Zbg%d",seq(1:128))))
+
+##bind all training data
+bindalltrain<-actnmsubtrain %>% 
+  bind_cols(trainInertiaXTA)%>%bind_cols(trainInertiaYTA)%>%
+  bind_cols(trainInertiaZTA)%>%bind_cols(trainX)
+
+
+##test data processing 
+testSubjects<-read.table("test/subject_train.txt", header=FALSE, sep="", col.names=c("subject"))
 
 testX<-read.table("test/X_test.txt")
 testactlabels<-read.table("test/y_test.txt", col.names=c("activity"))
-nmdtrainlabels<-inner_join(activity_lab,trainactlabels) ##activities name & num for training data
+nmdtestlabels<-inner_join(activity_lab,testactlabels) ##activities name & num for test data
 
-trainInertiaXTA<-read.table("train/Inertial Signals/total_acc_x_train.txt")
-trainInertiaYTA<-read.table("train/Inertial Signals/total_acc_y_train.txt")
-trainInertiaZTA<-read.table("train/Inertial Signals/total_acc_z_train.txt")
+actnmsubtest<-cbind(nmdtestlabels,testSubjects)##add subject ID column to training 
 
-trainInertiaXBA<-read.table("train/Inertial Signals/body_acc_x_train.txt")
-trainInertiaYBA<-read.table("train/Inertial Signals/body_acc_y_train.txt")
-trainInertiaZBA<-read.table("train/Inertial Signals/body_acc_z_train.txt")
 
-trainInertiaXBG<-read.table("train/Inertial Signals/body_gyro_x_train.txt")
-trainInertiaYBG<-read.table("train/Inertial Signals/body_gyro_y_train.txt")
-trainInertiaZBG<-read.table("train/Inertial Signals/body_gyro_z_train.txt")
+testInertiaXTA<-read.table("test/Inertial Signals/total_acc_x_test.txt", col.names=(sprintf("Xta%d",seq(1:128))))
+testInertiaYTA<-read.table("test/Inertial Signals/total_acc_y_test.txt",col.names=(sprintf("Yta%d",seq(1:128))))
+testInertiaZTA<-read.table("test/Inertial Signals/total_acc_z_test.txt",col.names=(sprintf("Zta%d",seq(1:128))))
+
+testInertiaXBA<-read.table("test/Inertial Signals/body_acc_x_test.txt",col.names=(sprintf("Xba%d",seq(1:128))))
+testInertiaYBA<-read.table("test/Inertial Signals/body_acc_y_test.txt",col.names=(sprintf("Yba%d",seq(1:128))))
+testInertiaZBA<-read.table("test/Inertial Signals/body_acc_z_test.txt",col.names=(sprintf("Zba%d",seq(1:128))))
+
+testInertiaXBG<-read.table("test/Inertial Signals/body_gyro_x_test.txt",col.names=(sprintf("Xbg%d",seq(1:128))))
+testInertiaYBG<-read.table("test/Inertial Signals/body_gyro_y_test.txt",col.names=(sprintf("Ybg%d",seq(1:128))))
+testInertiaZBG<-read.table("test/Inertial Signals/body_gyro_z_test.txt",col.names=(sprintf("Zbg%d",seq(1:128))))
+
+##bind all training data
+bindalltest<-actnmsubtest %>% 
+  bind_cols(testInertiaXTA)%>%bind_cols(testInertiaYTA)%>%
+  bind_cols(testInertiaZTA)%>%bind_cols(testX)
+
+##bind test and training data
+bindall<-bind_cols(bindalltrain,bindalltest)
+
+colswithmean<-bindall[,grepl("mean", colnames(bindall))]
+colswithsd<-bindall[,grepl("std()", colnames(bindall))]
+
+semifinal<-bind_cols(actnmsubtrain,colswithmean)
+byactivitysubject<-semifinal%>%group_by(activity,subject)
+finaldata<-summarise(byactivitysubject, mean())
