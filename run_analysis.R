@@ -52,17 +52,20 @@ testInertiaXBG<-read.table("test/Inertial Signals/body_gyro_x_test.txt",col.name
 testInertiaYBG<-read.table("test/Inertial Signals/body_gyro_y_test.txt",col.names=(sprintf("Ybg%d",seq(1:128))))
 testInertiaZBG<-read.table("test/Inertial Signals/body_gyro_z_test.txt",col.names=(sprintf("Zbg%d",seq(1:128))))
 
-##bind all training data
+##bind all test data
 bindalltest<-actnmsubtest %>% 
   bind_cols(testInertiaXTA)%>%bind_cols(testInertiaYTA)%>%
   bind_cols(testInertiaZTA)%>%bind_cols(testX)
 
 ##bind test and training data
-bindall<-bind_cols(bindalltrain,bindalltest)
-
+bindall<-bind_rows(bindalltrain,bindalltest)
+##extract any column with "mean" or "std()" in its name
 colswithmean<-bindall[,grepl("mean", colnames(bindall))]
 colswithsd<-bindall[,grepl("std()", colnames(bindall))]
-
+##join the selected colums to the columns with activity data and subject
 semifinal<-bind_cols(actnmsubtrain,colswithmean)
-byactivitysubject<-semifinal%>%group_by(activity,subject)
-finaldata<-summarise(byactivitysubject, mean())
+semifinal<-bind_cols(semifinal,colswithsd)
+##group by activity name and subject
+byactsub<-semifinal%>%group_by(desc,subject)
+##summarize columns with measurements
+finaldata<-summarize(byactsub,across(colnames(semifinal[4:82]),mean, .names="mean_{.col}"))
