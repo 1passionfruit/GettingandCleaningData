@@ -27,7 +27,10 @@ trainInertiaZBG<-read.table("train/Inertial Signals/body_gyro_z_train.txt",col.n
 ##bind all training data
 bindalltrain<-actnmsubtrain %>% 
   bind_cols(trainInertiaXTA)%>%bind_cols(trainInertiaYTA)%>%
-  bind_cols(trainInertiaZTA)%>%bind_cols(trainX)
+  bind_cols(trainInertiaZTA)%>%bind_cols(trainInertiaXBA)%>%
+  bind_cols(trainInertiaYBA)%>%bind_cols(trainInertiaZBA)%>%
+  bind_cols(trainInertiaXBG)%>%bind_cols(trainInertiaYBG)%>%
+  bind_cols(trainInertiaZBG)%>%bind_cols(trainX)
 
 
 ##test data processing 
@@ -55,7 +58,10 @@ testInertiaZBG<-read.table("test/Inertial Signals/body_gyro_z_test.txt",col.name
 ##bind all test data
 bindalltest<-actnmsubtest %>% 
   bind_cols(testInertiaXTA)%>%bind_cols(testInertiaYTA)%>%
-  bind_cols(testInertiaZTA)%>%bind_cols(testX)
+  bind_cols(testInertiaZTA)%>%bind_cols(testInertiaXBA)%>%
+  bind_cols(testInertiaYBA)%>%bind_cols(testInertiaZBA)%>%
+  bind_cols(testInertiaXBG)%>%bind_cols(testInertiaYBG)%>%
+  bind_cols(testInertiaZBG)%>%bind_cols(testX)
 
 ##bind test and training data
 bindall<-bind_rows(bindalltrain,bindalltest)
