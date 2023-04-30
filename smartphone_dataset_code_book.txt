@@ -11,24 +11,25 @@ desc 18
 		
 subject 2
 	Individual who performed activity
-		01..30	.each individula assigned a unique value from the interval
+		01..30	.each individual assigned a unique value from the interval
 
-mean_tBodyAcc.mean...X 		8
-mean_tBodyAcc.mean...Y		9
-mean_tBodyAcc.mean...Z		9
-mean_tGravityAcc.mean...X	8
-mean_tGravityAcc.mean...Y	9
-mean_tGravityAcc.mean...Z	9
-mean_tBodyAccJerk.mean...X	8
-mean_tBodyAccJerk.mean...Y	9
-mean_tBodyAccJerk.mean...Z	9
-mean_tBodyGyro.mean...X		8
-mean_tBodyGyro.mean...Y		9
-mean_tBodyGyro.mean...Z		9
-mean_tBodyGyroJerk.mean...X	8
-mean_tBodyGyroJerk.mean...Y	9
-mean_tBodyGyroJerk.mean...Z	9
-mean_tBodyAccMag.mean..		8
+SEE NOTES AT END
+mean_tBodyAcc.mean...X 		
+mean_tBodyAcc.mean...Y		
+mean_tBodyAcc.mean...Z		
+mean_tGravityAcc.mean...X	
+mean_tGravityAcc.mean...Y	
+mean_tGravityAcc.mean...Z	
+mean_tBodyAccJerk.mean...X	
+mean_tBodyAccJerk.mean...Y	
+mean_tBodyAccJerk.mean...Z	
+mean_tBodyGyro.mean...X		
+mean_tBodyGyro.mean...Y		
+mean_tBodyGyro.mean...Z		
+mean_tBodyGyroJerk.mean...X	
+mean_tBodyGyroJerk.mean...Y	
+mean_tBodyGyroJerk.mean...Z	
+mean_tBodyAccMag.mean..		
 mean_tGravityAccMag.mean..
 mean_tBodyAccJerkMag.mean..
 mean_tBodyGyroMag.mean..
@@ -92,3 +93,14 @@ mean_fBodyAccMag.std..
 mean_fBodyBodyAccJerkMag.std..
 mean_fBodyBodyGyroMag.std..
 mean_fBodyBodyGyroJerkMag.std..
+
+Notes: 
+======
+The name of each variable for which the mean was calculated in the resulting data set was derived by
+concatenating the word "mean" to the name of the variable from the file features.txt.
+ 
+The acceleration signal from the smartphone accelerometer X axis in standard gravity units 'g' and is
+therefore the unit of measure for all variables with the sub string "Acc" in its name.
+ 
+The angular velocity vector measured by the gyroscope for each window sample. The units are radians/second 
+and is therefore the unit of measure for all variables with the sub string "Gyro" in its name. 
