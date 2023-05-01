@@ -65,4 +65,4 @@ semifinal<-bind_cols(semifinal,colswithsd)
 byactsub<-semifinal%>%group_by(desc,subject)
 ##summarize columns with measurements
 finaldata<-summarize(byactsub,across(colnames(semifinal[4:82]),mean, .names="mean_{.col}"))
-write.csv(finaldata, file="finaldata.csv")
+write.table(finaldata, file="finaldata.txt", row.names=FALSE)
