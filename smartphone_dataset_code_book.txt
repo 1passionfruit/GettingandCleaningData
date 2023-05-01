@@ -104,3 +104,5 @@ therefore the unit of measure for all variables with the sub string "Acc" in its
  
 The angular velocity vector measured by the gyroscope for each window sample. The units are radians/second 
 and is therefore the unit of measure for all variables with the sub string "Gyro" in its name. 
+
+Variables are normalized and bounded within [-1,1]

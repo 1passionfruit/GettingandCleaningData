@@ -19,4 +19,5 @@ Notes:
 
 * The name of each variable for which the mean was calculated in the resulting data set was derived by concatenating the word "mean" to the name of the variable.
 * The acceleration signal from the smartphone accelerometer X axis in standard gravity units 'g' and is therefore the unit of measure for all variables with the sub string "Acc" in its name.
-* The angular velocity vector measured by the gyroscope for each window sample. The units are radians/second and is therefor the unit of measure for all variables with the sub string "Gyro" in its name. 
+* The angular velocity vector measured by the gyroscope for each window sample. The units are radians/second and is therefore the unit of measure for all variables with the sub string "Gyro" in its name. 
+*Variables are normalized and bounded within [-1,1]
