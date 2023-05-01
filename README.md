@@ -6,7 +6,7 @@ The submission consists of the following files:
 1. **finaldata.txt** - File with the resulting data
 1. **run_analysis.R** - File with the script to convert input test and training data to resulting data.
 1. **Smartphone_Dataset_code_book.txt** - File with codes for the resulting data
-1. **README.HTML** - File with general information about the submission
+1. **README.MD** - File with general information about the submission
 
 
 The resulting data was obtained as follows:
